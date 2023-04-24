@@ -1,8 +1,8 @@
-import pygame, sys
+import pygame, sys, asyncio
 from settings import *
 from level import Level
 
-class Game:
+class Game: ## formerly called Game
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -20,6 +20,10 @@ class Game:
             self.level.run(dt)
             pygame.display.update()
 
-if __name__ == '__main__':
-    game = Game()
-    game.run()
+async def main():
+    if __name__ == '__main__':
+        game = Game() ## Game() class formerly instantiated here
+        game.run()
+        await asyncio.sleep(0)
+
+asyncio.run(main())
