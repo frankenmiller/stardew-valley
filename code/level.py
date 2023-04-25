@@ -14,6 +14,6 @@ class Level:
         self.player = Player((SCREEN_WIDTH//2, SCREEN_HEIGHT//2), self.all_sprites)
 
     def run(self, dt):
-        self.display_surface.fill('dark red')
+        self.display_surface.fill('black')
         self.all_sprites.draw(self.display_surface)
         self.all_sprites.update(dt)
