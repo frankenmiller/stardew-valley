@@ -6,7 +6,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, pos, group):
         super().__init__(group)
         self.import_assets()
-        self.status = 'down_axe'
+        self.status = 'left_water'
         self.frame_index = 0
         ## general setup
         self.image = self.animations[self.status][self.frame_index]
@@ -15,6 +15,7 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.math.Vector2() ## default value (0,0)
         self.pos = pygame.math.Vector2(self.rect.center)
         self.speed = 200
+        print(self.frame_index)
     def import_assets(self):
         self.animations = {
             'up': [], 'down': [], 'left': [], 'right': [], 
