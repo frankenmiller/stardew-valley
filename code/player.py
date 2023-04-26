@@ -16,8 +16,12 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.math.Vector2() ## default value (0,0)
         self.pos = pygame.math.Vector2(self.rect.center)
         self.speed = 200
-        self.timers = {'tool use': Timer(350, self.use_tool)}
-        self.selected_tool = 'axe'
+        self.timers = {'tool use': Timer(350, self.use_tool),
+                        'tool switch': Timer(200)}
+        self.tools = ['hoe', 'axe', 'water']
+        self.tool_index = 0
+        self.selected_tool = self.tools[self.tool_index]
+
     def use_tool(self):
         print("Tool in use: ", self.selected_tool)
 
@@ -59,10 +63,17 @@ class Player(pygame.sprite.Sprite):
                 self.status = "right"
             else:
                 self.direction.x = 0
+            ## tool use
             if keys[pygame.K_SPACE]:
                 self.timers['tool use'].activate()
                 self.direction = pygame.math.Vector2()
                 self.frame_index = 0
+            ## change tool
+            if keys[pygame.K_LSHIFT] and not self.timers['tool switch'].active:
+                self.timers['tool switch'].activate()
+                self.tool_index += 1
+                self.tool_index = self.tool_index if self.tool_index < len(self.tools) else 0
+                self.selected_tool = self.tools[self.tool_index]
           
     def get_status(self):
         # idle and movement
