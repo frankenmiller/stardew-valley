@@ -93,13 +93,14 @@ class Player(pygame.sprite.Sprite):
                 self.tool_index += 1
                 self.tool_index = self.tool_index if self.tool_index < len(self.tools) else 0
                 self.selected_tool = self.tools[self.tool_index]
+                print("tool selected: ", self.selected_tool)
             ## change seed
             if keys[pygame.K_RSHIFT] and not self.timers['seed switch'].active:
                 self.timers['seed switch'].activate()
                 self.seed_index += 1
                 self.seed_index = self.seed_index if self.seed_index < len(self.seeds) else 0
                 self.selected_seed = self.seeds[self.seed_index]                
-                print(self.selected_seed)
+                print("seed selected: ", self.selected_seed)
           
     def get_status(self):
         # idle and movement
