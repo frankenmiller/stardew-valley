@@ -2,8 +2,9 @@ import pygame
 from settings import *
 from player import Player
 from overlay import Overlay
-from sprites import Generic
+from sprites import Generic, Water
 from pytmx.util_pygame import load_pygame
+from support import *
 
 class Level:
     def __init__(self):
@@ -16,17 +17,23 @@ class Level:
     
     def setup(self):
         tmx_data = load_pygame("../data/map.tmx")
-        ## House
+        ## import House
         for layer in ['HouseFloor', 'HouseFurnitureBottom']:
             for x,y,surf in tmx_data.get_layer_by_name(layer).tiles():
                 Generic((x*TILE_SIZE, y*TILE_SIZE), surf, self.all_sprites, LAYERS['house bottom'])                
-        ## Housewalls
+        ## import Housewalls
         for layer in ['HouseWalls', 'HouseFurnitureTop']:
             for x,y,surf in tmx_data.get_layer_by_name(layer).tiles():
                 Generic((x*TILE_SIZE, y*TILE_SIZE), surf, self.all_sprites, LAYERS['main'])
-        ## Fence
+        ## import Fence
         for x, y, surf in tmx_data.get_layer_by_name('Fence').tiles():
             Generic((x*TILE_SIZE, y*TILE_SIZE), surf, self.all_sprites) ## z=LAYERS['main] is default arg
+        ## import water
+        water_frames = import_folder('../graphics/water')
+        for x, y, surf in tmx_data.get_layer_by_name('Water').tiles():
+            Water((x*TILE_SIZE, y*TILE_SIZE), water_frames, self.all_sprites)
+        ## import trees
+        ## import wildflowers
 
         self.player = Player((SCREEN_WIDTH//2, SCREEN_HEIGHT//2), self.all_sprites)
         Generic(pos = (0,0), 
