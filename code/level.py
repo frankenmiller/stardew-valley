@@ -24,6 +24,9 @@ class Level:
         for layer in ['HouseWalls', 'HouseFurnitureTop']:
             for x,y,surf in tmx_data.get_layer_by_name(layer).tiles():
                 Generic((x*TILE_SIZE, y*TILE_SIZE), surf, self.all_sprites, LAYERS['main'])
+        ## Fence
+        for x, y, surf in tmx_data.get_layer_by_name('Fence').tiles():
+            Generic((x*TILE_SIZE, y*TILE_SIZE), surf, self.all_sprites) ## z=LAYERS['main] is default arg
 
         self.player = Player((SCREEN_WIDTH//2, SCREEN_HEIGHT//2), self.all_sprites)
         Generic(pos = (0,0), 
