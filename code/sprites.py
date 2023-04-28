@@ -59,6 +59,9 @@ class Tree(Generic):
     def check_death(self):
         if self.health <= 0:
             print("💀 The tree is really dead 💀")
+            self.image = self.stump_surface
+            self.rect = self.image.get_rect(midbottom=self.rect.midbottom)
+            self.hitbox = self.rect.copy().inflate(-10,-self.rect.height*0.6)
             self.alive = False
 
     def update(self, dt):
