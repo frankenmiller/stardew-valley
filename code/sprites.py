@@ -1,6 +1,7 @@
 import pygame
 from settings import *
-from random import randint
+from random import randint, choice
+from timer import Timer
 
 class Generic(pygame.sprite.Sprite):
     def __init__(self, pos, surf, groups, z=LAYERS['main']):
@@ -35,12 +36,26 @@ class WildFlower(Generic):
 class Tree(Generic):
     def __init__(self, pos, surf, groups, name):
         super().__init__(pos, surf, groups)
-        self.hitbox = self.rect.copy().inflate(-self.rect.width * 0.2, -self.rect.height * 0.75)
-
+        ## self.hitbox = self.rect.copy().inflate(-self.rect.width * 0.2, -self.rect.height * 0.75)
+        ## tree attributes
+        self.health = 5
+        self.alive = True
+        stump_path = f'../graphics/stumps/{"small" if name == "Small" else "large"}.png'
+        self.stump_surface = pygame.image.load(stump_path).convert_alpha()
+        self.invul_timer = Timer(200)
+        
+        ## apples
         self.apple_surf = pygame.image.load('../graphics/fruit/apple.png')
         self.apple_pos = APPLE_POS[name]
         self.apple_sprites = pygame.sprite.Group()
         self.create_fruit()
+
+    def damage(self):
+        self.health -= 1
+        if len(self.apple_sprites.sprites()) > 0:
+            random_apple = choice(self.apple_sprites.sprites())
+            random_apple.kill()
+
 
     def create_fruit(self):
         for pos in self.apple_pos:
