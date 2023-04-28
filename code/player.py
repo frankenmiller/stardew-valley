@@ -37,14 +37,18 @@ class Player(pygame.sprite.Sprite):
         self.tree_sprites = tree_sprites
 
     def use_tool(self):
+        print('tool in use: ',self.selected_tool)
         if self.selected_tool == 'hoe':
             pass
-        # if self.selected_tool == 'axe':
-        #     for tree in self.tree_sprites.sprites():
-        #         if tree.
+        if self.selected_tool == 'axe':
+            for tree in self.tree_sprites.sprites():
+                if tree.rect.collidepoint(self.target_pos):
+                    tree.damage()
         if self.selected_tool == 'water':
             pass
 
+    def get_target_position(self):
+        self.target_pos = self.rect.center + PLAYER_TOOL_OFFSET[self.status.split('_')[0]]
 
     def use_seed(self):
         ## print("Using seed: ", self.selected_seed)
@@ -162,5 +166,6 @@ class Player(pygame.sprite.Sprite):
         self.input()
         self.get_status()
         self.update_timers()
+        self.get_target_position()
         self.move(dt)
         self.animate(dt)
