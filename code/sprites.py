@@ -56,6 +56,14 @@ class Tree(Generic):
             random_apple = choice(self.apple_sprites.sprites())
             random_apple.kill()
 
+    def check_death(self):
+        if self.health <= 0:
+            print("💀 The tree is really dead 💀")
+            self.alive = False
+
+    def update(self, dt):
+        if self.alive == True:
+            self.check_death()
 
     def create_fruit(self):
         for pos in self.apple_pos:

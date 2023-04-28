@@ -37,7 +37,13 @@ class Player(pygame.sprite.Sprite):
         self.tree_sprites = tree_sprites
 
     def use_tool(self):
-        print('tool in use: ',self.selected_tool)
+        if self.selected_tool == 'axe':
+            print('tool in use: 🪓 axe 🪓') 
+        elif self.selected_tool == 'hoe':
+            print('tool in use: 🦴 hoe 🦴') 
+        elif self.selected_tool == 'water':
+            print('tool in use: 💦 water 💦') 
+
         if self.selected_tool == 'hoe':
             pass
         if self.selected_tool == 'axe':
