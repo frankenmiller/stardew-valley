@@ -32,6 +32,7 @@ class Level:
         water_frames = import_folder('../graphics/water')
         for x, y, surf in tmx_data.get_layer_by_name('Water').tiles():
             Water((x*TILE_SIZE, y*TILE_SIZE), water_frames, self.all_sprites)
+        
         ## import trees
         ## import wildflowers
 
