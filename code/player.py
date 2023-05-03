@@ -4,7 +4,7 @@ from support import *
 from timer import Timer
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos, group, collision_sprites):
+    def __init__(self, pos, group, collision_sprites, tree_sprites):
         super().__init__(group)
         self.import_assets()
         self.status = 'down_idle'
@@ -33,10 +33,28 @@ class Player(pygame.sprite.Sprite):
         self.seeds = ['corn', 'tomato']
         self.seed_index = 1
         self.selected_seed = self.seeds[self.seed_index]
+        ## interaction
+        self.tree_sprites = tree_sprites
 
     def use_tool(self):
-        ## print("Tool in use: ", self.selected_tool)
-        pass
+        if self.selected_tool == 'axe':
+            print('tool in use: 🪓 axe 🪓') 
+        elif self.selected_tool == 'hoe':
+            print('tool in use: 🦴 hoe 🦴') 
+        elif self.selected_tool == 'water':
+            print('tool in use: 💦 water 💦') 
+
+        if self.selected_tool == 'hoe':
+            pass
+        if self.selected_tool == 'axe':
+            for tree in self.tree_sprites.sprites():
+                if tree.rect.collidepoint(self.target_pos):
+                    tree.damage()
+        if self.selected_tool == 'water':
+            pass
+
+    def get_target_position(self):
+        self.target_pos = self.rect.center + PLAYER_TOOL_OFFSET[self.status.split('_')[0]]
 
     def use_seed(self):
         ## print("Using seed: ", self.selected_seed)
@@ -154,5 +172,6 @@ class Player(pygame.sprite.Sprite):
         self.input()
         self.get_status()
         self.update_timers()
+        self.get_target_position()
         self.move(dt)
         self.animate(dt)
