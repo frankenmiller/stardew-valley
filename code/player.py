@@ -85,7 +85,7 @@ class Player(pygame.sprite.Sprite):
         
     def input(self):
         keys = pygame.key.get_pressed()
-        if not self.timers['tool use'].active:
+        if not self.timers['tool use'].active and not self.sleep:
             if keys[pygame.K_UP]:
                 self.direction.y = -1
                 self.status = "up"
@@ -133,7 +133,7 @@ class Player(pygame.sprite.Sprite):
                     if collided_interaction_sprite[0].name == 'Trader':
                         print("iteracting with the trader")
                         pass
-                    else:
+                    elif collided_interaction_sprite[0].name == 'Bed' and not self.sleep:
                         self.status = 'left_idle'
                         self.sleep = True
 
