@@ -37,9 +37,9 @@ class Level:
             Water((x*TILE_SIZE, y*TILE_SIZE), water_frames, self.all_sprites)
         ## import trees
         for obj in tmx_data.get_layer_by_name('Trees'):
-            Tree((obj.x,obj.y), obj.image,
-                 [self.all_sprites, self.collision_sprites, self.tree_sprites],
-                 name=obj.name)
+            Tree(pos=(obj.x,obj.y), surf=obj.image,
+                 groups=[self.all_sprites, self.collision_sprites, self.tree_sprites],
+                 name=obj.name, player_add=self.player_add)
         ## import wildflowers
         for obj in tmx_data.get_layer_by_name('Decoration'):
             WildFlower((obj.x,obj.y), obj.image, [self.all_sprites, self.collision_sprites])
@@ -59,11 +59,15 @@ class Level:
                 groups = self.all_sprites,
                 z = LAYERS['ground'])
 
+    def player_add(self, item):
+        self.player.item_inventory[item] += 1
+
     def run(self, dt):
         self.display_surface.fill('black')
         self.all_sprites.custom_draw(self.player)
         self.all_sprites.update(dt)
         self.overlay.display()
+        print(self.player.item_inventory)
 
 class CameraGroup(pygame.sprite.Group):
     def __init__(self):
