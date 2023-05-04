@@ -89,6 +89,7 @@ class Tree(Generic):
                 duration=300
             )
             print("💀 The tree is really dead 💀")
+            self.player_add('wood')
             self.image = self.stump_surface
             self.rect = self.image.get_rect(midbottom=self.rect.midbottom)
             self.hitbox = self.rect.copy().inflate(-10,-self.rect.height*0.6)
